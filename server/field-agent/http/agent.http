@@ -30,4 +30,4 @@ Content-Type: application/json
     "agencies": []
 }
 ###
-DELETE {{url}}/2 HTTP/1.1
+DELETE {{url}}/9 HTTP/1.1

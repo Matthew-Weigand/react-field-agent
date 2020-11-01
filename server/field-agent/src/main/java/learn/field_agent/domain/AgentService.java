@@ -73,7 +73,7 @@ public class AgentService {
         if (Validations.isNullOrBlank(agent.getFirstName())) {
             result.addMessage("firstName is required", ResultType.INVALID);
         }
-
+//
         if (Validations.isNullOrBlank(agent.getLastName())) {
             result.addMessage("lastName is required", ResultType.INVALID);
         }
