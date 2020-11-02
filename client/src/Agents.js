@@ -27,7 +27,7 @@ class Agents extends React.Component {
           lastName: ``,
           dob: ``,
           heightInInches: ``,
-          mode: `Add`
+          mode: `Add`,
         });
       });
   };
@@ -98,13 +98,6 @@ class Agents extends React.Component {
     });
   };
 
-  //TODO Add edit button
-  //TODO stub out handler method
-  //TODO fetch the agent and update state
-  //TODO add the form
-  //TODO add form submit handler
-  //TODO reset state
-
   editToDoHandler = (agentId) => {
     console.log("Edit agent " + agentId);
 
@@ -119,7 +112,7 @@ class Agents extends React.Component {
             lastName,
             dob,
             heightInInches,
-            mode: 'Edit'
+            mode: "Edit",
           });
         }
       );
@@ -163,12 +156,64 @@ class Agents extends React.Component {
     });
   };
 
+  cancelAgentUpdate = () => {
+    this.setState({
+      id: 0,
+      firstName: ``,
+      middleName: ``,
+      lastName: ``,
+      dob: ``,
+      heightInInches: ``,
+      mode: "Add",
+    });
+  };
+
   render() {
     const { mode } = this.state;
     return (
       <>
         <h2>Agents</h2>
 
+        <table className="table table-hover">
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">Agent Id</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">D.O.B</th>
+              <th scope="col">Height in Inches</th>
+              <th scope="col">Manage Agents</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.agents.map((agent) => (
+              <tr key={agent.agentId}>
+                <td>{agent.agentId}</td>
+                <td>{agent.firstName}</td>
+                <td>{agent.lastName}</td>
+                <td>{agent.dob}</td>
+                <td>{agent.heightInInches}</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={() => this.editToDoHandler(agent.agentId)}
+                  >
+                    Edit Agent
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => this.deleteToDoHandler(agent.agentId)}
+                  >
+                    Delete Agent
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <br />
+        <br />
+        <h5>Add an Agent</h5>
         {mode === "Add" && (
           <form onSubmit={this.addSubmitHandler}>
             <label>
@@ -227,7 +272,8 @@ class Agents extends React.Component {
 
         {mode === "Edit" && (
           <form onSubmit={this.editSubmitHandler}>
-            <label>
+              <div className="form-group">
+              <label>
               First Name:
               <input
                 name="firstName"
@@ -278,28 +324,16 @@ class Agents extends React.Component {
             </label>
             <br />
             <button type="submit">Update Agent</button>
+            <button onClick={this.cancelAgentUpdate} type="button">
+              Cancel Update
+            </button>
+              </div>
+           
           </form>
         )}
 
-        <ul>
-          {this.state.agents.map((agent) => (
-            <li key={agent.agentId}>
-              {agent.firstName} {agent.lastName}
-              <button
-                type="button"
-                onClick={() => this.editToDoHandler(agent.agentId)}
-              >
-                Edit Agent
-              </button>
-              <button
-                type="button"
-                onClick={() => this.deleteToDoHandler(agent.agentId)}
-              >
-                Delete Agent
-              </button>
-            </li>
-          ))}
-        </ul>
+
+        
       </>
     );
   }
