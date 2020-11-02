@@ -8,6 +8,7 @@ class Agents extends React.Component {
       id: 0,
       firstName: ``,
       middleName: ``,
+
       lastName: ``,
       dob: ``,
       heightInInches: ``,
@@ -83,7 +84,7 @@ class Agents extends React.Component {
     });
   };
 
-  deleteToDoHandler = (agentId) => {
+  deleteAgentHandler = (agentId) => {
     console.log("Delete to do  " + agentId);
 
     fetch(`http://localhost:8080/api/agent/${agentId}`, {
@@ -98,7 +99,7 @@ class Agents extends React.Component {
     });
   };
 
-  editToDoHandler = (agentId) => {
+  editAgentHandler = (agentId) => {
     console.log("Edit agent " + agentId);
 
     fetch(`http://localhost:8080/api/agent/${agentId}`)
@@ -172,9 +173,8 @@ class Agents extends React.Component {
     const { mode } = this.state;
     return (
       <>
-        <h2>Agents</h2>
-
-        <table className="table table-hover">
+        <h2 class="text-center">Agents</h2>
+        <table className="table table-hover table-sm">
           <thead className="thead-dark">
             <tr>
               <th scope="col">Agent Id</th>
@@ -194,16 +194,10 @@ class Agents extends React.Component {
                 <td>{agent.dob}</td>
                 <td>{agent.heightInInches}</td>
                 <td>
-                  <button
-                    type="button"
-                    onClick={() => this.editToDoHandler(agent.agentId)}
-                  >
-                    Edit Agent
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => this.deleteToDoHandler(agent.agentId)}
-                  >
+                  <button class="btn btn-sm btn-dark" type="button" onClick={() => this.editAgentHandler(agent.agentId)}>
+                    Update Agent
+                    </button>
+                  <button class="btn btn-sm btn-outline-danger" type="button" onClick={() => this.deleteAgentHandler(agent.agentId)}>
                     Delete Agent
                   </button>
                 </td>
@@ -211,132 +205,86 @@ class Agents extends React.Component {
             ))}
           </tbody>
         </table>
-        <br />
-        <br />
-        <h5>Add an Agent</h5>
+        <br /><br />
+
         {mode === "Add" && (
           <form onSubmit={this.addSubmitHandler}>
-            <label>
-              First Name:
-              <input
-                name="firstName"
-                value={this.state.firstName}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <label>
-              Middle Name:
-              <input
-                name="middleName"
-                value={this.state.middleName}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <label>
-              Last Name:
-              <input
-                name="lastName"
-                value={this.state.lastName}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <label>
-              DOB:
-              <input
-                name="dob"
-                value={this.state.dob}
-                onChange={this.changeHandler}
-                type="date"
-              />
-            </label>
-            <br />
-            <label>
-              Height (in inches):
-              <input
-                name="heightInInches"
-                value={this.state.heightInInches}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <button type="submit">Add Agent</button>
+            <h5>Add an Agent</h5>
+            <div className="form-group row">
+              <div class="col-6">
+                <label>First Name: </label>
+                <input type="text" className="form-control" name="firstName" value={this.state.firstName}
+                  onChange={this.changeHandler} placeholder="Enter first name" />< br />
+              </div>
+              <div class="col-6">
+                <label>Middle Name: </label>
+                <input type="text" className="form-control" name="middleName" value={this.state.middleName}
+                  onChange={this.changeHandler} placeholder="Enter middle name" />< br />
+              </div>
+              <div class="col-6">
+                <label>Last Name: </label>
+                <input type="text" className="form-control" name="lastName" value={this.state.lastName}
+                  onChange={this.changeHandler} placeholder="Enter last name" />< br />
+              </div>
+              <div class="col-6">
+                <label>D.O.B: </label>
+                <input type="date" className="form-control" name="dob" value={this.state.dob}
+                  onChange={this.changeHandler} />< br />
+              </div>
+              <div class="col-6">
+                <label>Height (in Inches): </label>
+                <input type="text" className="form-control" name="heightInInches" value={this.state.heightInInches}
+                  onChange={this.changeHandler} placeholder="Enter height" />< br />
+              </div>
+
+            </div>
+            <div>
+              <button type="submit" class="btn btn-block btn-primary">Add Agent</button>
+            </div>
           </form>
         )}
 
         {mode === "Edit" && (
           <form onSubmit={this.editSubmitHandler}>
-              <div className="form-group">
-              <label>
-              First Name:
-              <input
-                name="firstName"
-                value={this.state.firstName}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
+            <h5>Update an Agent</h5>
             <br />
-            <label>
-              Middle Name:
-              <input
-                name="middleName"
-                value={this.state.middleName}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <label>
-              Last Name:
-              <input
-                name="lastName"
-                value={this.state.lastName}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <label>
-              DOB:
-              <input
-                name="dob"
-                value={this.state.dob}
-                onChange={this.changeHandler}
-                type="date"
-              />
-            </label>
-            <br />
-            <label>
-              Height (in inches):
-              <input
-                name="heightInInches"
-                value={this.state.heightInInches}
-                onChange={this.changeHandler}
-                type="text"
-              />
-            </label>
-            <br />
-            <button type="submit">Update Agent</button>
-            <button onClick={this.cancelAgentUpdate} type="button">
-              Cancel Update
-            </button>
+            <div className="form-group row">
+              <div class="col-6">
+                <label>First Name: </label>
+                <input type="text" className="form-control" name="firstName" value={this.state.firstName}
+                  onChange={this.changeHandler} placeholder="Enter first name" />< br />
               </div>
-           
+              <div class="col-6">
+                <label>Middle Name: </label>
+                <input type="text" className="form-control" name="middleName" value={this.state.middleName}
+                  onChange={this.changeHandler} placeholder="Enter middle name" />< br />
+              </div>
+              <div class="col-6">
+                <label>Last Name: </label>
+                <input type="text" className="form-control" name="lastName" value={this.state.lastName}
+                  onChange={this.changeHandler} placeholder="Enter last name" />< br />
+              </div>
+              <div class="col-6">
+                <label>D.O.B: </label>
+                <input className="form-control" type="date" name="dob" value={this.state.dob}
+                  onChange={this.changeHandler} />< br />
+              </div>
+              <div class="col-6">
+                <label>Height (in Inches): </label>
+                <input type="text" className="form-control" name="heightInInches" value={this.state.heightInInches}
+                  onChange={this.changeHandler} placeholder="Enter height" />< br />
+              </div>
+            </div>
+            <div>
+              <button className="btn btn-block btn-primary" type="submit">Update Agent </button><br />
+            </div>
+            <div>
+              <button className="btn btn-block btn-dark" onClick={this.cancelAgentUpdate} type="button">Cancel</button>
+            </div>
           </form>
         )}
-
-
-        
       </>
     );
   }
 }
-
 export default Agents;
